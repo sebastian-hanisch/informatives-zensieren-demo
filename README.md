@@ -1,7 +1,6 @@
 # Informatives Zensieren – Streamlit-Demo
 
-<!-- Live-Link nach dem Deploy direkt hierher setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-informatives-zensieren-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-informatives-zensieren-demo.streamlit.app/)**
 
 Demo der Reihe „Überlebenszeit“ (zensierte Zeiten bis zum Ereignis) in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“. Sie geht von der [kaplan-meier-demo](https://github.com/sebastian-hanisch/kaplan-meier-demo) aus
 und prüft die **Annahme, die diese Demo und die weiteren Demos der Reihe treffen: Die Zensierung ist unabhängig vom Ereignis.** Hier ist sie absichtlich verletzt, und die Wahrheit ist bekannt. Vehikel ist die **Containerverweilzeit** der
@@ -13,22 +12,22 @@ Ein Container im Block wird irgendwann abgeholt. Scheidet er vorher aus der Beob
 **Kernfrage: Wie weit kann Kaplan–Meier danebenliegen, und was lässt sich aus den Daten allein dazu sagen?** Die Antwort der Demo: Beim Mechanismus „kurz vor der Abholung“ (q = 70 %, n = 300, Mittel über 1000 Läufe) liegt der Kaplan–Meier-Median bei f = 20 % um 15,8 % und bei f = 40 % um 41,0 % über dem wahren Median 4,00 (Tabelle unten); ob die Zensierung abhängig ist,
 lässt sich aus (Zeit, Ereignis) allein, ohne Zusatzannahmen, nicht entscheiden: Zu den hier gewählten Mechanismen gibt es eine unabhängige Ersatzwelt mit denselben beobachtbaren Daten (stetige Zeiten, Übertragung von Tsiatis 1975: unser Schluss); man kann **Schranken** angeben oder **benannte Annahmen** durchspielen.
 
-## Befunde und Korrekturen gegenüber dem Plan
+## Befunde und Korrekturen gegenüber der ersten Messung
 
-1. **Eigene Zahlen mit SplitMix64 und 1000 statt 200 Läufen.** Die Vormessung (`out_uz_v1_bis_v8.txt`, numpy-Zufall, 200 Läufe, Mechanismus „kurz vor der Abholung“, n = 300) nennt für f = 20 % einen Kaplan–Meier-Median von 4,66 mit Schranken 3,74 bis 5,36 und für f = 40 % 5,67 mit 3,48 bis 9,87.
+1. **Eigene Zahlen mit SplitMix64 und 1000 statt 200 Läufen.** Die Vormessung (eine erste, schnelle Messung vor dem Bau der Demo; NumPy-Zufall, 200 Läufe, Mechanismus „kurz vor der Abholung“, n = 300) nennt für f = 20 % einen Kaplan–Meier-Median von 4,66 mit Schranken 3,74 bis 5,36 und für f = 40 % 5,67 mit 3,48 bis 9,87.
    Mit dem Code dieser Demo (1000 Läufe): 4,63 mit 3,71 bis 5,33 und 5,64 mit 3,46 bis 9,82 (Tabelle unten). Die Unterschiede betragen höchstens etwa das 1,5-Fache des in der Vormessung genannten Standardfehlers; in der Demo und hier gelten die eigenen Zahlen.
-2. **Die Schranken schließen die Wahrheit der Stichprobe immer ein, die der Population nicht immer.** Die Plan-Eigenschaft „bei unabhängiger Zensierung liegt die Wahrheit in den Schranken“ gilt für **jede** Zensierung, die vor dem Ereignis liegt, auch für die abhängige, aber nur für die wahren Zeiten **der Stichprobe**
+2. **Die Schranken schließen die Wahrheit der Stichprobe immer ein, die der Population nicht immer.** Die ursprünglich erwartete Eigenschaft „bei unabhängiger Zensierung liegt die Wahrheit in den Schranken“ gilt für **jede** Zensierung, die vor dem Ereignis liegt, auch für die abhängige, aber nur für die wahren Zeiten **der Stichprobe**
    (Aufzählung in `tests/test_oracle_informatives_zensieren.py`). Der Median der Population (4,00) liegt bei f = 20 % in 891 von 1000 Läufen zwischen den Schranken (Tabelle).
-3. **Kipppunkt: zwei Fälle statt einer Zahl.** Die Vormessung (`uz_v20_bis_v23.py`, Messlogik gelesen) zählte Läufe, in denen der Median schon bei φ = 0 unter 4,5 lag, mit φ* = 0 mit und nannte 0,20 ± 0,02 (f = 20 %) und 0,42 ± 0,01 (f = 40 %), je 200 Läufe.
+3. **Kipppunkt: zwei Fälle statt einer Zahl.** Die Vormessung (Messlogik im Messskript gelesen) zählte Läufe, in denen der Median schon bei φ = 0 unter 4,5 lag, mit φ* = 0 mit und nannte 0,20 ± 0,02 (f = 20 %) und 0,42 ± 0,01 (f = 40 %), je 200 Läufe.
    Diese Demo trennt die Fälle: Bei f = 20 % gilt der Schluss „Median ≥ 4,5“ in 188 von 500 Läufen schon bei φ = 0 nicht; in 311 kippt er bei im Mittel φ* = 0,29 ± 0,011, in 1 Lauf nie. Bei f = 40 % kippt er in 499 von 500 Läufen bei im Mittel φ* = 0,40 ± 0,006, in 1 Lauf gilt er schon bei φ = 0 nicht.
-4. **Zweiter Mechanismus, Richtung gemessen.** Der Plan nannte als offen, ob andere Mechanismen die Richtung ändern („vermutlich nicht, nicht gemessen“). Der zweite Mechanismus („Langlieger früh ausgelagert“) ändert sie: Bei f = 50 % und q = 30 % liegt Kaplan–Meier unter dem wahren Median (Tabelle).
+4. **Zweiter Mechanismus, Richtung gemessen.** Offen war zunächst, ob andere Mechanismen die Richtung ändern (die ursprüngliche Erwartung war „vermutlich nicht“, nicht gemessen). Der zweite Mechanismus („Langlieger früh ausgelagert“) ändert sie: Bei f = 50 % und q = 30 % liegt Kaplan–Meier unter dem wahren Median (Tabelle).
    Bei f = 40 % und q = 70 % ist Kaplan–Meier dagegen kaum verschoben (3,97 gegen 3,99 für die wahren Zeiten der Stichproben). Das sind zwei Beispiele, keine Regel über alle Mechanismen.
-5. **Zwei Welten stetig statt im Tagesraster.** Die Vormessung (V21b) baute Welt B im Tagesraster mit zwei Millionen Containern. Diese Demo rechnet die Ersatzwelt **stetig** in geschlossener Form (Satz von Tsiatis gilt für stetige, glatte Verteilungen) und zieht Stichproben aus beiden Welten; das Tagesraster ist als eigene Rechnung dabei (Punkt 6).
-6. **Restabweichung der Nachrechnung geklärt (Tagesraster).** Die Nachrechnung des Plans gab Kaplan–Meier bei t = 4 / 6 / 8 mit 0,637 / 0,473 / 0,358 (N = 30000, stetig) gegen die Ersatzwelt im Tagesraster 0,652 / 0,490 / 0,373, eine Abweichung von etwa 0,015, Ursache offen.
-   Eigene Rechnung: Die **stetige** Ersatzwelt liefert 0,637 / 0,472 / 0,356; Kaplan–Meier aus Stichproben von A (N = 10000, 20 Zufalls-Seeds) liefert 0,636 / 0,472 / 0,358 mit Standardfehlern von 0,001. Das **Tagesraster** mit der Regel „Ereignis zuerst“ liefert bei Rasterbreite 1 Tag **genau** 0,652 / 0,490 / 0,373 (die Zahlen des Plans);
+5. **Zwei Welten stetig statt im Tagesraster.** Die Vormessung baute Welt B im Tagesraster mit zwei Millionen Containern. Diese Demo rechnet die Ersatzwelt **stetig** in geschlossener Form (Satz von Tsiatis gilt für stetige, glatte Verteilungen) und zieht Stichproben aus beiden Welten; das Tagesraster ist als eigene Rechnung dabei (Punkt 6).
+6. **Restabweichung der Nachrechnung geklärt (Tagesraster).** Die Nachrechnung der ersten Messung gab Kaplan–Meier bei t = 4 / 6 / 8 mit 0,637 / 0,473 / 0,358 (N = 30000, stetig) gegen die Ersatzwelt im Tagesraster 0,652 / 0,490 / 0,373, eine Abweichung von etwa 0,015, Ursache offen.
+   Eigene Rechnung: Die **stetige** Ersatzwelt liefert 0,637 / 0,472 / 0,356; Kaplan–Meier aus Stichproben von A (N = 10000, 20 Zufalls-Seeds) liefert 0,636 / 0,472 / 0,358 mit Standardfehlern von 0,001. Das **Tagesraster** mit der Regel „Ereignis zuerst“ liefert bei Rasterbreite 1 Tag **genau** 0,652 / 0,490 / 0,373 (die Zahlen der ersten Messung);
    mit der Regel „Zensierung zuerst“ 0,623 / 0,457 / 0,341. Mit feiner werdendem Raster nähern sich beide Regeln der stetigen Kurve (bei 0,01 Tagen 0,637 / 0,473 / 0,356 und 0,636 / 0,472 / 0,356). Die Restabweichung stammt also aus dem Runden auf Tage (Gleichstände, je nach Regel nach oben oder unten), nicht aus dem Zufall.
    (Gemessen für Mechanismus „kurz vor der Abholung“, f = 40 %, q = 70 %.)
-7. **Wahrheit der Population in geschlossener Form.** Wahre Anteile bei t = 4 / 6 / 8: 0,500 / 0,326 / 0,221 (der Plan nannte 0,503 / 0,328 / 0,222 aus einer Simulation).
+7. **Wahrheit der Population in geschlossener Form.** Wahre Anteile bei t = 4 / 6 / 8: 0,500 / 0,326 / 0,221 (die erste Messung nannte 0,503 / 0,328 / 0,222 aus einer Simulation).
 
 ## Modell
 
@@ -48,7 +47,7 @@ erzeugt dieselben beobachtbaren Daten wie Welt A, hat aber eine andere Wahrheit.
 ## Methodik
 
 Vier Experimente in der App: (1) **Schranken von Hand** an sechs Containern mit Brüchen; (2) **Anteil f**: Kaplan–Meier gegen beide Schranken und die Wahrheit, über 30 feste Zufalls-Seeds und als eingefrorene Messung; (3) **Zwei Welten, dieselben Daten**: Stichproben aus A und B, ihre beobachtbaren Anteile und die Kurven, dazu das Tagesraster als Rechnung;
-(4) **Kipppunkt**: wie viele der Ausgeschiedenen müssten in Wahrheit sofort abgehen, damit ein Schluss kippt. Der Kern (Kaplan–Meier, Quantil, SplitMix64) ist eine Kopie aus `ueberlebenszeit-planung/kern/uz_core.py` (Stand 2026-11-10, gekürzt, siehe Kopfzeile von `inz_core.py`); Zufall nur über SplitMix64.
+(4) **Kipppunkt**: wie viele der Ausgeschiedenen müssten in Wahrheit sofort abgehen, damit ein Schluss kippt. Der Kern (Kaplan–Meier, Quantil, SplitMix64) ist eine Kopie des gemeinsamen Kerns `uz_core.py` der Überlebenszeit-Linie (Stand 2026-11-10, gekürzt, siehe Kopfzeile von `inz_core.py`); Zufall nur über SplitMix64.
 
 ## Befunde (gemessen, keine Behauptungen)
 
@@ -68,7 +67,7 @@ Alle Zahlen: Welt wie oben, n = 300, Zufalls-Seeds fest (`tools/measure_informat
 | Tagesraster (Rechnung ohne Zufall, f = 40 %, q = 70 %, t = 4 / 6 / 8) | Rasterbreite 1 Tag: „Ereignis zuerst“ 0,652 / 0,490 / 0,373, „Zensierung zuerst“ 0,623 / 0,457 / 0,341; 0,5 Tage: 0,644 / 0,481 / 0,365 und 0,629 / 0,464 / 0,348; 0,01 Tage: 0,637 / 0,473 / 0,356 und 0,636 / 0,472 / 0,356; stetig 0,637 / 0,472 / 0,356 | Messung (`rasters`), Neuberechnung und Simulation in `test_oracle_informatives_zensieren.py`, `test_claims.py` |
 
 **Zahl → Test.** Bänder und exakte Werte: Brüche (Handbeispiel, diskrete Zwei-Welten-Rechnung) sind exakt getestet; Zahlen aus Zufall stehen als eingefrorene Messung in der Datei und werden in `test_claims.py` gegen die Neuberechnung einzelner Zeilen (Band über 4 Standardfehler) und gegen den Wortlaut dieser README geprüft.
-Die Zahlen der Vormessung (Befunde 1 und 3, 6) stehen in Dateien außerhalb dieses Repos und sind hier nur Vergleich, kein Test.
+Die Zahlen der Vormessung (Befunde 1, 3 und 6) stammen aus Messungen außerhalb dieses Repos und sind hier nur Vergleich, kein Test.
 
 ## Ehrliche Grenzen
 
@@ -98,7 +97,7 @@ Die Zahlen der Vormessung (Befunde 1 und 3, 6) stehen in Dateien außerhalb dies
 | Datei | Zweck |
 |---|---|
 | `app.py` | Streamlit-App: vier Experimente, Ergebnis, Kernfrage, Grenzen, Mathematik |
-| `inz_core.py` | Kopie aus `ueberlebenszeit-planung/kern/uz_core.py` (gekürzt): Kaplan–Meier, Quantil, Eingabeprüfung, SplitMix64 |
+| `inz_core.py` | Kopie des gemeinsamen Kerns `uz_core.py` der Überlebenszeit-Linie (Stand 2026-11-10, gekürzt): Kaplan–Meier, Quantil, Eingabeprüfung, SplitMix64 |
 | `inz_scenario.py` | Welt (lognormal), Erzeuger beider Mechanismen, Wahrheit in geschlossener Form, Handbeispiel |
 | `inz_algorithm.py` | Schranken, gewichtete Kurve, Median unter φ, Kipppunkt |
 | `inz_ersatz.py` | Teilverteilungen in geschlossener Form, Ersatzwelt, Stichprobe aus Welt B, Tagesraster |
@@ -115,7 +114,7 @@ Die Zahlen der Vormessung (Befunde 1 und 3, 6) stehen in Dateien außerhalb dies
 - **Konfidenzbänder für die Schranken** und Unsicherheit des Kipppunkts je Stichprobe: Die Demo zeigt Spannen über feste Zufalls-Seeds, keine Intervalle.
 - **Kovariaten, Gruppen, Gewichtung nach Zensierwahrscheinlichkeit:** nicht umgesetzt.
 - **Ein Mechanismus aus echten Daten** oder weitere Mechanismen: nicht gemessen; die zwei Mechanismen sind gewählte Beispiele.
-- **Der Mechanismus als kausales Diagramm** (Linie der kausalen Diagramme): nicht umgesetzt und nicht verlinkt.
+- **Der Mechanismus als kausales Diagramm**: nicht umgesetzt und nicht verlinkt.
 - **Konforme Grenzen** (Candès, Lei, Ren): nur als Gegenstück genannt; die Methode setzt unabhängige Zensierung voraus und ist nicht Teil der Demo.
 
 ## Lokal ausführen
@@ -143,4 +142,4 @@ Gebaut mit Streamlit, Plotly, NumPy und fpdf2.
 
 ---
 
-Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zu den Demos: [Interaktive Demos](https://sebastianhanisch.net/demos.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Überlebenszeit: zensierte Zeiten lesen](https://sebastianhanisch.net/konzepte-ueberlebenszeit.html).

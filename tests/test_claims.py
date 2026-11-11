@@ -139,7 +139,7 @@ def test_readme_tagesraster_gegen_messung():
     cf = lambda w: triple(by[w]["censor_first"])     # noqa: E731
     _has(f"Rasterbreite 1 Tag: „Ereignis zuerst“ {ef(1.0)}, „Zensierung zuerst“ {cf(1.0)}")
     _has(f"0,5 Tage: {ef(0.5)} und {cf(0.5)}; 0,01 Tage: {ef(0.01)} und {cf(0.01)}; stetig {triple(near['s_b'])}")
-    _has(f"liefert bei Rasterbreite 1 Tag **genau** {ef(1.0)} (die Zahlen des Plans)")
+    _has(f"liefert bei Rasterbreite 1 Tag **genau** {ef(1.0)} (die Zahlen der ersten Messung)")
     _has(f"mit der Regel „Zensierung zuerst“ {cf(1.0)}")
     _has(f"(bei 0,01 Tagen {ef(0.01)} und {cf(0.01)})")
     _has(f"liefert {triple(near['s_b'])}; Kaplan–Meier aus Stichproben von A")
@@ -186,7 +186,6 @@ def test_messung_zwei_welten_rechnungen_exakt_und_stichproben_im_band():
 def test_vormessungszahlen_stehen_als_vergleich_in_der_readme():
     for text in ("4,66 mit Schranken 3,74 bis 5,36", "5,67 mit 3,48 bis 9,87", "0,20 ± 0,02", "0,42 ± 0,01", "0,637 / 0,473 / 0,358", "0,652 / 0,490 / 0,373", "0,503 / 0,328 / 0,222"):
         _has(text)
-    assert "`out_uz_v1_bis_v8.txt`" in README
 
 
 def test_testzahl_in_der_readme_stimmt_mit_der_suite_ueberein():
