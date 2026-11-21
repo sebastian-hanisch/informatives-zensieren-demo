@@ -9,7 +9,7 @@ MECH_NEAR = "Kurz vor der Abholung"
 MECH_LONG = "Langlieger früh ausgelagert"
 MECHANISMS = (MECH_NEAR, MECH_LONG)
 MECH_HELP = {
-    MECH_NEAR: "Ein zufälliger Anteil f der Container verlässt die Beobachtung bei q·D (D = Zeit bis zur Abholung), also kurz bevor er abgeholt worden wäre (Umlagerung, verlorenes Etikett).",
+    MECH_NEAR: "Ein zufälliger Anteil f der Container verlässt die Beobachtung bei q·D (D = Zeit bis zur Abholung), also kurz bevor er abgeholt worden wäre (Umlagerung, verlorenes Label).",
     MECH_LONG: "Die Container mit den längsten Verweilzeiten (der Anteil f der Population) verlassen die Beobachtung bei q·D; wer ohnehin lange bleibt, wird früh ausgelagert.",
 }
 

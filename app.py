@@ -66,7 +66,7 @@ st.markdown(
     """
 Ein Container im Block wird irgendwann abgeholt; die **Verweilzeit** ist die Zeit bis dahin. Scheidet ein Container vorher aus der Beobachtung aus, **ist von ihm nur bekannt: „mindestens so lang“**.
 **Kaplan–Meier** behandelt ihn dann so, als verhielte er sich ab jetzt wie alle, die noch beobachtet werden. Das ist nur gesichert, wenn das Ausscheiden nichts darüber verrät, **wie bald** er abgeholt würde; sonst kann die Schätzung verschoben sein (Größe und Richtung hängen am Mechanismus).
-Scheidet ein Container gerade aus, weil er bald abgeholt wird (Umlagerung, verlorenes Etikett), schätzt Kaplan–Meier die Verweilzeit in dieser Demo zu lang. Aus den Daten allein (Zeit und Ereignis, ohne Zusatzannahmen) lässt sich das **nicht entscheiden**: Zu den hier gewählten Mechanismen gibt es eine unabhängige Ersatzwelt mit denselben beobachtbaren Daten (stetige Zeiten, unser Schluss aus Tsiatis 1975).
+Scheidet ein Container gerade aus, weil er bald abgeholt wird (Umlagerung, verlorenes Label), schätzt Kaplan–Meier die Verweilzeit in dieser Demo zu lang. Aus den Daten allein (Zeit und Ereignis, ohne Zusatzannahmen) lässt sich das **nicht entscheiden**: Zu den hier gewählten Mechanismen gibt es eine unabhängige Ersatzwelt mit denselben beobachtbaren Daten (stetige Zeiten, unser Schluss aus Tsiatis 1975).
 Man kann **Schranken** angeben oder **benannte Annahmen** durchspielen, wie weit die Schätzung danebenliegen kann.
 
 Die Daten sind **erfunden** (Simulation, die Wahrheit ist bekannt). Der Fall ohne Ausscheiden steht in der [kaplan-meier-demo](https://github.com/sebastian-hanisch/kaplan-meier-demo), die Containerverweilzeit in der [verweilzeit-demo](https://github.com/sebastian-hanisch/verweilzeit-demo).

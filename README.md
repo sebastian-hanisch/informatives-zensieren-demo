@@ -8,7 +8,7 @@ und prüft die **Annahme, die diese Demo und die weiteren Demos der Reihe treffe
 
 ## Warum dieses Problem
 
-Ein Container im Block wird irgendwann abgeholt. Scheidet er vorher aus der Beobachtung aus, weil er bald abgeholt würde (Umlagerung, verlorenes Etikett), ist von ihm nur „mindestens so lang“ bekannt, und Kaplan–Meier behandelt ihn, als verhielte er sich ab jetzt wie alle, die noch beobachtet werden.
+Ein Container im Block wird irgendwann abgeholt. Scheidet er vorher aus der Beobachtung aus, weil er bald abgeholt würde (Umlagerung, verlorenes Label), ist von ihm nur „mindestens so lang“ bekannt, und Kaplan–Meier behandelt ihn, als verhielte er sich ab jetzt wie alle, die noch beobachtet werden.
 **Kernfrage: Wie weit kann Kaplan–Meier danebenliegen, und was lässt sich aus den Daten allein dazu sagen?** Die Antwort der Demo: Beim Mechanismus „kurz vor der Abholung“ (q = 70 %, n = 300, Mittel über 1000 Läufe) liegt der Kaplan–Meier-Median bei f = 20 % um 15,8 % und bei f = 40 % um 41,0 % über dem wahren Median 4,00 (Tabelle unten); ob die Zensierung abhängig ist,
 lässt sich aus (Zeit, Ereignis) allein, ohne Zusatzannahmen, nicht entscheiden: Zu den hier gewählten Mechanismen gibt es eine unabhängige Ersatzwelt mit denselben beobachtbaren Daten (stetige Zeiten, Übertragung von Tsiatis 1975: unser Schluss); man kann **Schranken** angeben oder **benannte Annahmen** durchspielen.
 
